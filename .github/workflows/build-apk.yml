@@ -8,31 +8,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python
+    - name: Set up Python 3.10
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y python3-pip build-essential git ffmpeg \
-        libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-        libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
-        zlib1g-dev libgl1-mesa-dev libgles2-mesa-dev
+        sudo apt-get install -y \
+        python3-pip git zip unzip wget \
+        libffi-dev libssl-dev libgl1-mesa-glx \
+        libgles2-mesa-dev libsdl2-dev \
+        build-essential cython3
+
+    - name: Install buildozer
+      run: |
+        pip install --upgrade pip
         pip install buildozer==1.5.0 cython
 
-    - name: Build APK
+    - name: Build Android APK
       run: |
         cd android_app
-        buildozer android debug
+        buildozer android debug deploy
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: apk
+        name: autotrade-mobile-apk
         path: android_app/bin/*.apk
