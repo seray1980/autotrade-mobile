@@ -11,6 +11,8 @@ source.exclude_dirs = tests,bin,lib,data,.git
 
 # Version
 version = 1.0.0
+version.regex = __version__ = ['"](.*)['"]
+version.filename = main.py
 
 # App info
 author = AutoTrade Team
@@ -32,3 +34,12 @@ requirements = python3,kivy==2.3.1,pyjnius,android,requests,pandas
 # Icon
 icon.filename = assets/icon.png
 presplash.filename = assets/splash.png
+
+# Android-specific
+android.archs = arm64-v8a,armeabi-v7a
+android.accepted_sdk_versions = 28
+android.sdk_path =
+
+# Presplash
+android.presplash_color = #FFFFFF
+
