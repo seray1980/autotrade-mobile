@@ -31,6 +31,4 @@ fullscreen = 0
 requirements = python3,kivy==2.3.1,pyjnius,android,requests,pandas
 
 # Icon
-icon.filename = assets/icon.png
-presplash.filename = assets/splash.png
 
