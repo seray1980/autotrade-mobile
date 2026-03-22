@@ -1,6 +1,9 @@
 [app]
 
 title = AutoTrade Mobile
+version = 1.0.0
+version.regex = __version__ = ["'](.*)["']
+version.filename = main.py
 package.name = autotrademobile
 package.domain = org.autotrade
 source.dir = .
@@ -10,9 +13,6 @@ source.exclude_dirs = tests,bin,lib,data,.git
 [buildozer]
 
 # Version
-version = 1.0.0
-version.regex = __version__ = ["'](.*)["']
-version.filename = main.py
 
 # App info
 author = AutoTrade Team
