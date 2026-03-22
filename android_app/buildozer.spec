@@ -1,7 +1,9 @@
 [app]
 
 title = AutoTrade Mobile
+package.name = autotrademobile
 package.domain = org.autotrade
+source.dir = .
 source.include_exts = py,png,jpg,kv,json,csv
 source.exclude_dirs = tests,bin,lib,data,.git
 
