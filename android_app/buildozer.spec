@@ -1,7 +1,6 @@
 [app]
 
 title = AutoTrade Mobile
-version = 1.0.0
 version.regex = __version__ = ["'](.*)["']
 version.filename = main.py
 package.name = autotrademobile
