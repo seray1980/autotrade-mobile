@@ -11,6 +11,8 @@ source.exclude_dirs = tests,bin,lib,data,.git
 
 # 版本信息
 version = 1.0.0
+version.regex = __version__ = ['"](.+)['"]
+version.filename = %(source.dir)s/main.py
 
 # 应用信息
 author = AutoTrade Team
