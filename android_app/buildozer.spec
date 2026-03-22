@@ -11,6 +11,8 @@ source.exclude_dirs = tests,bin,lib,data,.git
 
 # Version
 version = 1.0.0
+version.regex = __version__ = ["'](.*)["']
+version.filename = main.py
 
 # App info
 author = AutoTrade Team
