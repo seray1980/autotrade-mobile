@@ -1,0 +1,77 @@
+========================================
+AutoTrade Mobile - 快速参考
+========================================
+
+## 只需 1 个步骤
+
+双击运行：final_deploy.bat
+
+脚本会自动完成所有操作！
+
+========================================
+
+## 如果脚本失败，手动执行这 7 条命令
+
+打开命令行（cmd），复制粘贴运行：
+
+cd C:\Users\lis\WorkBuddy\20260312235516
+
+git init
+
+git config --global user.name "seray1980"
+
+git config --global user.email "seray1980@users.noreply.github.com"
+
+git add .
+
+git commit -m "Initial commit"
+
+git remote add origin https://github.com/seray1980/autotrade-mobile.git
+
+git branch -M main
+
+git push -u origin main
+
+========================================
+
+## 前提条件
+
+1. Git 已安装
+   下载：https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe
+
+2. GitHub Token 已创建
+   创建：https://github.com/settings/tokens/new
+   Note: autotrade-mobile
+   Expiration: No expiration
+   勾选: repo
+
+3. GitHub 仓库已创建
+   创建：https://github.com/new
+   Repository name: autotrade-mobile
+   选择 Public
+
+========================================
+
+## 推送时输入
+
+Username: seray1980
+Password: [粘贴你的 Token]
+
+⚠️ 密码框输入的是 Token，不是 GitHub 密码！
+
+========================================
+
+## 构建完成后的操作
+
+1. 访问：https://github.com/seray1980/autotrade-mobile/actions
+2. 等待绿色勾出现（15-30分钟）
+3. 点击构建记录
+4. 下载 Artifacts 中的 APK
+
+========================================
+
+## 完成！
+
+就这么简单！
+
+========================================

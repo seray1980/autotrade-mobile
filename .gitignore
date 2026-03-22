@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Kivy/Buildozer
+build/
+bin/
+.buildozer/
+*.apk
+*.aab
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时文件
+*.tmp
+*.log
+test_*.py
+check_file.py
+fix_syntax.py
+token.txt
+push_notifications.csv
+error_log.txt
+v6_log.txt
+v7_test_log.txt
+
+# 脚本文件
+*.bat
+*.ps1
+
+# 文档文件
+*.md
+!README.md
+
+# 其他
+-p/
+data/
+for_upload/
+hulian/

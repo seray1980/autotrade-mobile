@@ -1,0 +1,70 @@
+=======================================
+创建 GitHub Personal Access Token 指南
+=======================================
+
+GitHub 已不再支持密码登录，需要使用 Personal Access Token
+
+步骤 1：登录 GitHub
+------------------
+访问：https://github.com/login
+用户名：seray1980
+密码：[你的 GitHub 密码]
+
+步骤 2：创建 Token
+----------------
+1. 登录后，点击右上角头像
+2. 选择 "Settings"（设置）
+3. 在左侧菜单中，向下滚动找到 "Developer settings"
+4. 点击 "Personal access tokens" → "Tokens (classic)"
+5. 点击 "Generate new token (classic)"
+
+步骤 3：配置 Token
+----------------
+1. Note（备注）：输入 "autotrade-mobile"
+2. Expiration（过期时间）：选择 "No expiration"（永不过期）或 "90 days"
+3. Select scopes（选择权限）：
+   - 勾选 "repo"（这个选项会自动勾选所有子选项）
+   - 这是必需的权限，用于完整访问仓库
+
+4. 点击页面底部的 "Generate token"
+
+步骤 4：复制 Token
+----------------
+⚠️ 重要：Token 只显示一次！
+
+1. Token 生成后会显示在页面上
+2. 点击 Token 右侧的复制按钮
+3. 立即保存到安全的地方（记事本等）
+4. **一定要复制！** 刷新页面后就看不到了
+
+Token 格式类似：
+ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+步骤 5：使用 Token
+----------------
+当你在命令行中使用 Git 推送代码时：
+
+Username: seray1980
+Password: [粘贴你的 Token，不是 GitHub 密码！]
+
+=======================================
+重要提示
+=======================================
+
+1. Token 和 GitHub 密码不同！
+   - 推送时密码框输入的是 Token
+   - 不是你的 GitHub 账户密码
+
+2. Token 只显示一次
+   - 务必立即复制保存
+   - 丢失了需要重新创建
+
+3. Token 安全
+   - 不要分享给他人
+   - 不要上传到代码仓库
+   - 建议定期更换
+
+=======================================
+创建完成后，继续运行：
+setup_git_repo.bat
+=======================================

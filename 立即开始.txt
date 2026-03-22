@@ -1,0 +1,148 @@
+========================================
+AutoTrade Mobile 部署 - 立即开始
+========================================
+
+## 现在请按照以下步骤操作：
+
+### 步骤 1：安装 Git（5分钟）
+
+下载并安装 Git：
+https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe
+
+安装时保持默认选项，只有一步重要：
+【重要】在 PATH 设置步骤，选择：
+"Git from the command line and also from 3rd-party software"
+
+安装完成后，打开新的命令行窗口，运行：
+git --version
+
+应该看到：git version 2.43.0.windows.1
+
+---
+
+### 步骤 2：创建 GitHub Token（2分钟）
+
+1. 访问：https://github.com/settings/tokens
+2. 点击 "Generate new token (classic)"
+3. Note（备注）：输入 "autotrade-mobile"
+4. Expiration（过期时间）：选择 "No expiration"
+5. Select scopes：勾选 "repo"（这会自动勾选所有子选项）
+6. 点击 "Generate token"
+7. ⚠️ 立即复制 Token（只显示一次！）
+
+Token 格式类似：ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+---
+
+### 步骤 3：创建 GitHub 仓库（1分钟）
+
+1. 访问：https://github.com/new
+2. Repository name：输入 autotrade-mobile
+3. Description：AutoTrade Mobile - Android Stock Trading App
+4. Public/Private：选择 Public（公开）
+5. 【重要】Initialize：不要勾选任何选项（不要添加 README）
+6. 点击 "Create repository"
+
+创建完成后，复制仓库地址：
+https://github.com/seray1980/autotrade-mobile.git
+
+---
+
+### 步骤 4：运行自动部署脚本（1分钟）
+
+打开命令行（cmd），依次运行：
+
+cd C:\Users\lis\WorkBuddy\20260312235516
+
+git init
+
+git config --global user.name "seray1980"
+
+git config --global user.email "seray1980@users.noreply.github.com"
+
+git add .
+
+git commit -m "Initial commit - AutoTrade Mobile v1.0"
+
+git remote add origin https://github.com/seray1980/autotrade-mobile.git
+
+git branch -M main
+
+git push -u origin main
+
+---
+
+### 推送时输入：
+
+Username: seray1980
+Password: [粘贴你的 Token，不是 GitHub 密码！]
+
+⚠️ 注意：Password 框输入的是 Token，不是你的 GitHub 密码！
+
+---
+
+### 步骤 5：等待构建完成（15-30分钟）
+
+1. 推送成功后，访问：
+   https://github.com/seray1980/autotrade-mobile/actions
+
+2. 等待构建完成
+   - 🟡 黄色圆圈 = 构建中
+   - ✅ 绿色勾 = 构建成功
+
+3. 首次构建需要 15-30 分钟，请耐心等待
+
+---
+
+### 步骤 6：下载 APK（1分钟）
+
+1. 构建成功后（绿色勾），点击构建记录
+2. 滚动到底部找到 Artifacts 区域
+3. 点击 "apk" 下载 ZIP 文件
+4. 解压 ZIP 得到 APK 文件
+
+---
+
+### 步骤 7：安装到手机（2分钟）
+
+1. 将 APK 传输到手机（USB 或云存储）
+2. 在手机上点击 APK 文件
+3. 允许安装未知来源应用
+4. 完成安装
+
+---
+
+## 完成！
+
+现在你可以在手机上使用 AutoTrade Mobile 应用了！
+
+---
+
+## 后续更新代码
+
+修改代码后，只需运行：
+
+cd C:\Users\lis\WorkBuddy\20260312235516
+
+git add .
+
+git commit -m "你的更新说明"
+
+git push
+
+然后等待构建完成，下载新的 APK！
+
+---
+
+## 需要帮助？
+
+如果遇到问题，告诉我：
+1. 在哪个步骤
+2. 遇到什么错误
+3. 错误信息
+
+我会立即帮你解决！
+
+========================================
+祝你好运！🚀
+========================================

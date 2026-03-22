@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Token 创建指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0366d6;
+            border-bottom: 3px solid #0366d6;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #24292e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        h3 {
+            color: #586069;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .step {
+            background: #f6f8fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #0366d6;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #0366d6;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .warning {
+            background: #fff5b4;
+            border: 1px solid #ffd33d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning-title {
+            font-weight: bold;
+            color: #9a6700;
+            margin-bottom: 10px;
+        }
+        .success {
+            background: #dcffe4;
+            border: 1px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success-title {
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        code {
+            background: #f6f8fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e36209;
+        }
+        .button {
+            display: inline-block;
+            background: #0366d6;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #0256c7;
+        }
+        .list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .list li {
+            margin: 8px 0;
+        }
+        .highlight {
+            background: #fff8c5;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 GitHub Personal Access Token 创建指南</h1>
+
+        <div class="warning">
+            <div class="warning-title">⚠️ 重要提醒</div>
+            <p>GitHub 已不再支持密码登录，必须使用 Personal Access Token 才能推送代码。Token 只显示一次，务必立即复制保存！</p>
+        </div>
+
+        <h2>📋 操作步骤</h2>
+
+        <div class="step">
+            <span class="step-number">步骤 1：访问 Token 创建页面</span>
+            <p>点击下面的按钮打开 GitHub Token 创建页面：</p>
+            <a href="https://github.com/settings/tokens" target="_blank" class="button">🚀 打开 Token 创建页面</a>
+            <p>如果未登录，会跳转到登录页面，输入：</p>
+            <ul class="list">
+                <li><strong>Username</strong>: <code>seray1980</code></li>
+                <li><strong>Password</strong>: [你的 GitHub 密码]</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <span class="step-number">步骤 2：进入 Tokens 页面</span>
+            <p>如果需要手动导航：</p>
+            <ul class="list">
+                <li>点击右上角头像</li>
+                <li>选择 <strong>Settings</strong>（设置）</li>
+                <li>在左侧菜单中向下滚动</li>
+                <li>找到 <strong>Developer settings</strong></li>
+                <li>点击它</li>
+                <li>在左侧选择 <strong>Personal access tokens</strong></li>
+                <li>点击 <strong>Tokens (classic)</strong></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <span class="step-number">步骤 3：生成新 Token</span>
+            <p>在 Tokens 页面，点击右侧的按钮：</p>
+            <p><strong>Generate new token (classic)</strong></p>
+        </div>
+
+        <div class="step">
+            <span class="step-number">步骤 4：配置 Token</span>
+
+            <h3>1. Note（备注）<span class="highlight">必填</span></h3>
+            <p>输入：<code>autotrade-mobile</code></p>
+
+            <h3>2. Expiration（过期时间）<span class="highlight">必填</span></h3>
+            <p>选择：<strong>No expiration</strong>（永不过期）</p>
+            <p>或根据需要选择 30/90 天</p>
+
+            <h3>3. Select scopes（选择权限）<span class="highlight">必填</span></h3>
+            <p>找到 <strong>repo</strong> 选项，<strong>勾选它</strong></p>
+            <p>⚠️ 勾选 <code>repo</code> 会自动勾选所有子选项，这是必需的权限</p>
+            <p>其他选项不要勾选！</p>
+
+            <h3>4. 点击生成</h3>
+            <p>滚动到页面底部，点击：<strong>Generate token</strong></p>
+        </div>
+
+        <div class="step">
+            <span class="step-number">步骤 5：复制 Token<span class="highlight">最重要！</span></span>
+
+            <div class="warning">
+                <div class="warning-title">⚠️ Token 只显示一次！</div>
+                <p>生成成功后，页面顶部会显示 Token，必须立即复制！刷新页面后就看不到了！</p>
+            </div>
+
+            <h3>Token 格式示例：</h3>
+            <p><code>ghp_1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t</code></p>
+            <p>共 40 个字符，以 <code>ghp_</code> 开头</p>
+
+            <h3>如何复制：</h3>
+            <ul class="list">
+                <li><strong>方法 1</strong>：点击 Token 右侧的复制图标 📋</li>
+                <li><strong>方法 2</strong>：手动选择整个 Token，按 Ctrl+C</li>
+            </ul>
+
+            <h3>保存 Token：</h3>
+            <p>立即将 Token 保存到安全的地方：</p>
+            <ul class="list">
+                <li>打开记事本</li>
+                <li>粘贴 Token</li>
+                <li>保存到桌面：github_token.txt</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <span class="step-number">步骤 6：使用 Token</span>
+
+            <p>当你在 Git 中推送代码时：</p>
+            <pre style="background: #f6f8fa; padding: 15px; border-radius: 5px; overflow-x: auto;">
+git push -u origin main</pre>
+
+            <p>会提示：</p>
+            <pre style="background: #f6f8fa; padding: 15px; border-radius: 5px;">
+Username for 'https://github.com': seray1980
+Password for 'https://seray1980@github.com': </pre>
+
+            <p>输入：</p>
+            <ul class="list">
+                <li><strong>Username</strong>: <code>seray1980</code></li>
+                <li><strong>Password</strong>: 粘贴你的 Token（不是 GitHub 密码！）</li>
+            </ul>
+
+            <div class="warning">
+                <div class="warning-title">⚠️ 重要</div>
+                <p>Token 不是 GitHub 密码！推送时密码框输入的是 Token！</p>
+            </div>
+        </div>
+
+        <div class="success">
+            <div class="success-title">✅ 完成！</div>
+            <p>现在你有了一个可用的 Personal Access Token，可以继续推送代码了！</p>
+            <p>运行 <code>git_deploy.bat</code> 来推送代码，推送时输入你的 Token。</p>
+        </div>
+
+        <h2>❓ 常见问题</h2>
+
+        <h3>Q: Token 复制失败怎么办？</h3>
+        <p>A: 尝试使用复制按钮，或手动选择整个 Token 后复制。确保 Token 完整（40个字符）。</p>
+
+        <h3>Q: Token 不工作？</h3>
+        <p>A: 检查 Token 是否完整，确认勾选了 <code>repo</code> 权限，检查 Token 是否过期。如果还不行，重新创建 Token。</p>
+
+        <h3>Q: 忘记保存 Token 怎么办？</h3>
+        <p>A: Token 只显示一次，需要重新创建。访问：https://github.com/settings/tokens</p>
+
+        <h3>Q: Token 可以分享吗？</h3>
+        <p>A: ❌ 不可以！Token 相当于密码，分享会导致账户被盗。</p>
+
+        <div class="warning">
+            <div class="warning-title">🔐 Token 安全</div>
+            <ul class="list">
+                <li>✅ 保存在安全的地方</li>
+                <li>✅ 可以给不同项目创建不同 Token</li>
+                <li>✅ 定期更换 Token</li>
+                <li>✅ 如果 Token 泄露，立即删除</li>
+                <li>❌ 不要分享给他人</li>
+                <li>❌ 不要上传到代码仓库</li>
+                <li>❌ 不要写在代码中</li>
+            </ul>
+        </div>
+
+        <h2>🎉 下一步</h2>
+        <p>Token 创建完成后，继续运行 <code>git_deploy.bat</code> 来推送代码！</p>
+        <p>如果遇到问题，查看详细说明：<code>创建Token详细步骤.md</code></p>
+
+    </div>
+</body>
+</html>
