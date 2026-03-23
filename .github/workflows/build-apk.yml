@@ -26,12 +26,7 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y \
-          python3-pip git zip unzip \
-          libffi-dev libssl-dev \
-          libgles2-mesa-dev \
-          build-essential \
-          libgl1 libglx-mesa0
+        sudo apt-get install -y python3-pip git zip unzip libffi-dev libssl-dev libgles2-mesa-dev build-essential libgl1 libglx-mesa0
 
     - name: Install Python dependencies
       run: |
@@ -41,47 +36,34 @@ jobs:
     - name: Pre-install Android SDK and NDK
       run: |
         SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk
-        NDK_ROOT=$HOME/.buildozer/android/platform/android-ndk-r25b
-        
-        # 1. 安装新版 cmdline-tools
         mkdir -p $SDK_ROOT/cmdline-tools
-        wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/cmdline-tools.zip
-        unzip -q /tmp/cmdline-tools.zip -d /tmp/ct
-        mv /tmp/ct/cmdline-tools $SDK_ROOT/cmdline-tools/latest
-        rm -rf /tmp/cmdline-tools.zip /tmp/ct
         
-        NEW_SDKMANAGER=$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
+        # Install new cmdline-tools (requires Java 17)
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/ct.zip
+        unzip -q /tmp/ct.zip -d /tmp/ct_dir
+        mv /tmp/ct_dir/cmdline-tools $SDK_ROOT/cmdline-tools/latest
+        rm -rf /tmp/ct.zip /tmp/ct_dir
         
-        # 2. 接受许可
-        yes | $NEW_SDKMANAGER --sdk_root=$SDK_ROOT --licenses > /dev/null 2>&1 || true
+        NEW_SDK=$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
         
-        # 3. 安装所有需要的组件
-        $NEW_SDKMANAGER --sdk_root=$SDK_ROOT \
-          "platform-tools" \
-          "platforms;android-33" \
-          "build-tools;33.0.2"
+        # Accept licenses and install components
+        yes | $NEW_SDK --sdk_root=$SDK_ROOT --licenses > /dev/null 2>&1 || true
+        $NEW_SDK --sdk_root=$SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2"
         
-        # 4. 安装 NDK
+        # Install NDK r25b
         wget -q https://dl.google.com/android/repository/android-ndk-r25b-linux.zip -O /tmp/ndk.zip
         unzip -q /tmp/ndk.zip -d $HOME/.buildozer/android/platform/
         rm -f /tmp/ndk.zip
         
-        # 5. 关键步骤：替换旧版 sdkmanager 为新版的包装脚本
-        #    buildozer 会调用 tools/bin/sdkmanager，我们让它指向新版
+        # Create wrapper script for old-style sdkmanager path (avoid heredoc in YAML)
         mkdir -p $SDK_ROOT/tools/bin
-        cat > $SDK_ROOT/tools/bin/sdkmanager << 'EOF'
-#!/bin/bash
-exec $(dirname $0)/../../cmdline-tools/latest/bin/sdkmanager "$@"
-EOF
+        printf '%s\n' '#!/bin/bash' 'exec "$(dirname "$0")/../../cmdline-tools/latest/bin/sdkmanager" "$@"' > $SDK_ROOT/tools/bin/sdkmanager
         chmod +x $SDK_ROOT/tools/bin/sdkmanager
         
-        # 验证
-        echo "=== SDK 组件 ==="
-        ls $SDK_ROOT/
-        echo "=== build-tools ==="
-        ls $SDK_ROOT/build-tools/ 2>/dev/null
-        echo "=== NDK ==="
-        ls $HOME/.buildozer/android/platform/ | grep ndk
+        # Verify
+        echo "SDK contents:" && ls $SDK_ROOT/
+        echo "build-tools:" && ls $SDK_ROOT/build-tools/ 2>/dev/null || echo "none"
+        echo "NDK:" && ls $HOME/.buildozer/android/platform/ | grep ndk || echo "none"
 
     - name: Build Android APK
       run: |
