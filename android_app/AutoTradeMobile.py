@@ -45,9 +45,103 @@ from kivy.config import Config
 from kivy.graphics import Color, Rectangle
 import logging
 
-# 只导入数据管理器和凭证管理器，不导入任何交易执行模块
-from trade.utils.data_manager import get_data_manager
-from trade.utils.credential_manager import CredentialManager
+# Android 端使用内置的轻量级数据管理器（不依赖 trade 模块）
+import csv
+import json
+import os
+from pathlib import Path as FSPath
+
+class _SimpleDataManager:
+    """Android 端轻量级数据管理器，使用 CSV 文件存储"""
+    def __init__(self):
+        base = FSPath(__file__).parent
+        self.data_dir = base / 'data'
+        self.data_dir.mkdir(exist_ok=True)
+
+    def load_accounts(self):
+        f = self.data_dir / 'accounts.csv'
+        if not f.exists(): return []
+        try:
+            with open(f, 'r', encoding='utf-8') as fp:
+                return list(csv.DictReader(fp))
+        except: return []
+
+    def save_account(self, account):
+        f = self.data_dir / 'accounts.csv'
+        existing = self.load_accounts()
+        # 更新或追加
+        found = False
+        for i, a in enumerate(existing):
+            if a.get('account_id') == account.get('account_id'):
+                existing[i] = account; found = True; break
+        if not found: existing.append(account)
+        if existing:
+            with open(f, 'w', encoding='utf-8', newline='') as fp:
+                w = csv.DictWriter(fp, fieldnames=existing[0].keys())
+                w.writeheader(); w.writerows(existing)
+
+    def load_positions(self, account_id=None):
+        f = self.data_dir / 'positions.csv'
+        if not f.exists(): return []
+        try:
+            with open(f, 'r', encoding='utf-8') as fp:
+                rows = list(csv.DictReader(fp))
+            if account_id:
+                rows = [r for r in rows if r.get('account_id', '') == account_id]
+            return rows
+        except: return []
+
+    def load_monitors(self, account_id=None):
+        f = self.data_dir / 'monitors.csv'
+        if not f.exists(): return []
+        try:
+            with open(f, 'r', encoding='utf-8') as fp:
+                rows = list(csv.DictReader(fp))
+            if account_id:
+                rows = [r for r in rows if r.get('account_id', '') == account_id]
+            return rows
+        except: return []
+
+    def get_trade_logs(self, date=None):
+        f = self.data_dir / 'trade_logs.csv'
+        if not f.exists(): return []
+        try:
+            with open(f, 'r', encoding='utf-8') as fp:
+                rows = list(csv.DictReader(fp))
+            if date:
+                rows = [r for r in rows if r.get('date', '') == date or r.get('time', '').startswith(date)]
+            return rows
+        except: return []
+
+_dm_instance = None
+def get_data_manager():
+    global _dm_instance
+    if _dm_instance is None:
+        _dm_instance = _SimpleDataManager()
+    return _dm_instance
+
+class CredentialManager:
+    """Android 端简单凭证管理（存储在 JSON 文件）"""
+    def __init__(self):
+        base = FSPath(__file__).parent
+        self.cred_file = base / 'data' / 'credentials.json'
+        self.cred_file.parent.mkdir(exist_ok=True)
+
+    def _load(self):
+        if not self.cred_file.exists(): return {}
+        try:
+            with open(self.cred_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except: return {}
+
+    def get_credentials(self, account_id):
+        return self._load().get(account_id, {})
+
+    def save_credentials(self, account_id, creds):
+        data = self._load()
+        data[account_id] = creds
+        with open(self.cred_file, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False)
 import csv
 from pathlib import Path as FSPath
 
