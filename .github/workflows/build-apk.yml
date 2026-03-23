@@ -17,18 +17,35 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Set up Java 17
+    - name: Set up Java 11
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '11'
         distribution: 'temurin'
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-
-    - name: Install Android Build Tools
+    - name: Setup Android SDK with cmdline-tools
       run: |
-        sdkmanager "platforms;android-33" "build-tools;33.0.2" "ndk;25.2.9519653"
+        # 安装新版 cmdline-tools
+        mkdir -p $HOME/android-sdk/cmdline-tools
+        cd $HOME/android-sdk/cmdline-tools
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+        unzip -q cmdline-tools.zip
+        mv cmdline-tools latest
+        rm cmdline-tools.zip
+        
+        export ANDROID_SDK_ROOT=$HOME/android-sdk
+        export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+        
+        # 接受许可并安装所需包
+        yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses > /dev/null 2>&1 || true
+        sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
+          "platform-tools" \
+          "platforms;android-33" \
+          "build-tools;33.0.2" \
+          "ndk;25.2.9519653"
+        
+        echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+        echo "ANDROID_NDK_HOME=$HOME/android-sdk/ndk/25.2.9519653" >> $GITHUB_ENV
 
     - name: Install system dependencies
       run: |
@@ -45,13 +62,18 @@ jobs:
         pip install --upgrade pip
         pip install buildozer==1.5.0 cython==0.29.37
 
-    - name: Configure buildozer to use installed SDK/NDK
+    - name: Configure buildozer SDK path
       run: |
+        # 告诉 buildozer 使用我们安装好的SDK，不要自己下载
         mkdir -p ~/.buildozer/android/platform
-        # 把 GitHub Actions 安装好的 SDK 软链接到 buildozer 期望的路径
-        SDK_PATH=$(echo $ANDROID_SDK_ROOT)
-        echo "ANDROID_SDK_ROOT: $SDK_PATH"
-        ln -sfn $SDK_PATH ~/.buildozer/android/platform/android-sdk
+        ln -sfn $ANDROID_SDK_ROOT ~/.buildozer/android/platform/android-sdk
+        ln -sfn $ANDROID_NDK_HOME ~/.buildozer/android/platform/android-ndk-r25b
+        
+        # 验证
+        echo "SDK 目录内容:"
+        ls ~/.buildozer/android/platform/android-sdk/ | head -10
+        echo "build-tools:"
+        ls ~/.buildozer/android/platform/android-sdk/build-tools/ 2>/dev/null || echo "无"
 
     - name: Build Android APK
       run: |
