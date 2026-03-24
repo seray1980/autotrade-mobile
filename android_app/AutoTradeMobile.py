@@ -55,14 +55,17 @@ Config.set('graphics', 'multisamples', 0)
 Config.set('kivy', 'exit_on_escape', 1)
 Config.set('kivy', 'log_level', 'warning')
 
-FONT_NAME = 'SimHei'
+# ==================== 修复安卓闪退：只改字体 ====================
+import os
+IS_ANDROID = 'ANDROID_DATA' in os.environ
+
+FONT_NAME = 'Roboto' if IS_ANDROID else 'SimHei'
+
 try:
-    LabelBase.register(name=FONT_NAME, fn_reg='C:/Windows/Fonts/simhei.ttf')
+    if not IS_ANDROID:
+        LabelBase.register(name=FONT_NAME, fn_reg='C:/Windows/Fonts/simhei.ttf')
 except:
-    try:
-        LabelBase.register(name=FONT_NAME, fn_sim='simhei')
-    except:
-        pass
+    pass
 
 # ==================== 配色 ====================
 C = {
